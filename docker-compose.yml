@@ -1,0 +1,12 @@
+version: '3'
+services:
+  frontend:
+    container_name: nrms-frontend
+    image: nrms-frontend
+    build:
+      context: .
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '4200:4200'
