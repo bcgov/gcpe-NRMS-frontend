@@ -1,0 +1,18 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: templates/frontend/nrms-frontend-deploy.yaml
+#=========================================================
+# NAME=nrms-frontend
+# IMAGE_NAMESPACE=nrms-tools
+# REAL_IP_FROM=172.51.0.0/16
+# API_URL=https://nrms-api-nrms-dev.pathfinder.gov.bc.ca/api/
+# API_SERVICE_NAME=nrms-api
+# API_PATH=/api/
+# AdditionalRealIpFromRules=
+# IpFilterRules=
+APPLICATION_DOMAIN=nrms-frontend-nrms-prod.pathfinder.gov.bc.ca
+TAG_NAME=prod
+# HTTP_BASIC=
+# HTTP_BASIC_USERNAME=
+# HTTP_BASIC_PASSWORD=
