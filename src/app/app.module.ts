@@ -14,6 +14,7 @@ import { TopicsListComponent } from './topics/topics-list/topics-list.component'
 import { TopicsCardComponent } from './topics/topics-card/topics-card.component';
 import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver';
 import { FormsModule } from '@angular/forms';
+import { CollapseModule } from 'ngx-bootstrap';
 
 @NgModule({
    declarations: [
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
       HttpClientModule,
       OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
       PaginationModule.forRoot(),
-      FormsModule
+      FormsModule,
+      CollapseModule.forRoot()
    ],
    providers: [
     NewsReleaseService,
