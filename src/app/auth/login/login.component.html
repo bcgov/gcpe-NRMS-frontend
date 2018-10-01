@@ -1,0 +1,39 @@
+<div class="container">
+    <div tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="login-form">
+                        <h4>SIGN IN</h4>
+                        <div class="form-group mt-2">
+                            <input type="email" class="form-control" id="emailAddress" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-control fill-checkbox">
+                                <input type="checkbox" class="fill-control-input">
+                                <span class="fill-control-indicator"></span>
+                                <span class="fill-control-description ml-2">Remember me</span>
+                                <span class="float-right"><a href="#">Show password</a></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary pt-2 pb-2 pl-5 pr-5 mb-2 width-100" (click)="signIn()">Sign
+                                in</button>
+                            <small class="form-text text-muted text-center">Forgot password?</small>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">Don't have an account? <span><strong><a href="#" class="no-text-decoration">Sign
+                                    up</a></strong></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

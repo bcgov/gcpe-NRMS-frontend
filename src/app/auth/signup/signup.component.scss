@@ -1,0 +1,51 @@
+h1 {
+    font-weight: bold;
+    font-size: 2.1em;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 3.750em;
+    line-height: 3.750em;
+    background-color: #fff;
+}
+
+.footer ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer ul li {
+    display: inline;
+}
+
+.footer ul li:not(:last-child) {
+    margin-right: 3em;
+}
+
+.footer ul li a{
+    text-decoration: none;
+    color: #999;
+}
+
+.headline {
+    font-size: 1.125em;
+}
+
+.login-form {
+    margin-left: 4.063em; 
+    margin-right: 4.063em;
+}
+
+.progress-bar-container {
+    width: 20em; 
+    margin: 0 auto;
+}
+
+.container {
+    margin-top: 10em;
+    width: 37em;
+}

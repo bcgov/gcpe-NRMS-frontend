@@ -15,6 +15,12 @@ import { TopicsCardComponent } from './topics/topics-card/topics-card.component'
 import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap';
+import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import { MinistrySignupComponent } from './auth/ministry-signup/ministry-signup.component';
+import { FollowComponent } from './auth/follow/follow.component';
+import { NotificationsComponent } from './auth/notifications/notifications.component';
+import { SignupCompleteComponent } from './auth/signup-complete/signup-complete.component';
 
 @NgModule({
    declarations: [
@@ -22,7 +28,13 @@ import { CollapseModule } from 'ngx-bootstrap';
       NavMenuComponent,
       HomeComponent,
       TopicsListComponent,
-      TopicsCardComponent
+      TopicsCardComponent,
+      LoginComponent,
+      SignupComponent,
+      MinistrySignupComponent,
+      FollowComponent,
+      NotificationsComponent,
+      SignupCompleteComponent
    ],
    imports: [
       BrowserModule,
