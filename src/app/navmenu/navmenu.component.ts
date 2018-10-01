@@ -20,11 +20,4 @@ export class NavMenuComponent implements OnInit {
   loggedIn() {
     return this.authService.loggedIn();
   }
-
-  get givenName() {
-    const claims: any = this.authService.identityClaims;
-    if (!claims) { return null; }
-    return claims.preferred_username;
-  }
-
 }
