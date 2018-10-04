@@ -10,16 +10,26 @@ import { MinistrySignupComponent } from './auth/ministry-signup/ministry-signup.
 import { FollowComponent } from './auth/follow/follow.component';
 import { NotificationsComponent } from './auth/notifications/notifications.component';
 import { SignupCompleteComponent } from './auth/signup-complete/signup-complete.component';
+import { SearchComponent } from './search/search.component';
+import { SearchSuggestionsResolver } from './_resolvers/search-suggestions-resolver';
+import { RecentlyViewedArticlesResolver } from './_resolvers/recently-viewed-articles-resolver';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard], resolve: { newsReleases: NewsReleaseListResolver  } },
+  { path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard], resolve: { newsReleases: NewsReleaseListResolver } },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'ministry-signup', component: MinistrySignupComponent },
   { path: 'follow', component: FollowComponent },
   { path: 'notifications', component: NotificationsComponent },
-  { path: 'signup-complete', component: SignupCompleteComponent }
+  { path: 'signup-complete', component: SignupCompleteComponent },
+  {
+    path: 'search', component: SearchComponent,
+    resolve: {
+      searchSuggestions: SearchSuggestionsResolver,
+      recentlyViewedArticles: RecentlyViewedArticlesResolver
+    }
+  }
 ];
 
 @NgModule({

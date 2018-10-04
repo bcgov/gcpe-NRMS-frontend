@@ -1,0 +1,10 @@
+<div class="card">
+    <img class="card-img-top" src="{{article.imageURL}}" alt="Card image cap">
+    <div class="card-body">
+        <h3 class="card-title">{{ article.title }}</h3>
+        <p class="card-text text-muted">
+            {{ article.summary }}
+        </p>
+        <span class="text-muted">{{ article.publicationDate | date }} &bull; {{ article.timeToRead }} min read <i class="fa fa-bookmark fa-2x float-right"></i></span>
+    </div>
+</div>

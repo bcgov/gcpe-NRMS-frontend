@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
-import { PaginationModule } from 'ngx-bootstrap';
+import { PaginationModule, TypeaheadModule } from 'ngx-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +21,11 @@ import { MinistrySignupComponent } from './auth/ministry-signup/ministry-signup.
 import { FollowComponent } from './auth/follow/follow.component';
 import { NotificationsComponent } from './auth/notifications/notifications.component';
 import { SignupCompleteComponent } from './auth/signup-complete/signup-complete.component';
+import { SearchComponent } from './search/search.component';
+import { ArticleCardComponent } from './article-card/article-card.component';
+import { SearchSuggestionsResolver } from './_resolvers/search-suggestions-resolver';
+import { RecentlyViewedArticlesResolver } from './_resolvers/recently-viewed-articles-resolver';
+import { CheckboxComponent } from './controls/checkbox/checkbox.component';
 
 @NgModule({
    declarations: [
@@ -34,7 +39,10 @@ import { SignupCompleteComponent } from './auth/signup-complete/signup-complete.
       MinistrySignupComponent,
       FollowComponent,
       NotificationsComponent,
-      SignupCompleteComponent
+      SignupCompleteComponent,
+      SearchComponent,
+      ArticleCardComponent,
+      CheckboxComponent
    ],
    imports: [
       BrowserModule,
@@ -43,12 +51,15 @@ import { SignupCompleteComponent } from './auth/signup-complete/signup-complete.
       OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
       PaginationModule.forRoot(),
       FormsModule,
-      CollapseModule.forRoot()
+      CollapseModule.forRoot(),
+      TypeaheadModule.forRoot()
    ],
    providers: [
     NewsReleaseService,
     AlertifyService,
-    NewsReleaseListResolver
+    NewsReleaseListResolver,
+    SearchSuggestionsResolver,
+    RecentlyViewedArticlesResolver
     ],
    bootstrap: [
       AppComponent
