@@ -19,3 +19,8 @@
   @import '../node_modules/bootstrap/scss/bootstrap.scss';
   
   @import "assets/styles/overrides.scss";
+
+.progress {
+  height: 4px; 
+  width: 25em;
+}

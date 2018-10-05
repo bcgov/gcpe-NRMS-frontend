@@ -17,7 +17,7 @@ export class AppComponent {
     // redirect to /topics after successful login
     this.oauthService
       .loadDiscoveryDocumentAndTryLogin({ onTokenReceived: context => {
-          window.location.href = '/topics'; // not ideal, but this doesn't work: this.router.navigate(['/topics']);
+          window.location.href = '/login'; // not ideal, but this doesn't work: this.router.navigate(['/topics']);
         }
       });
     this.oauthService.events.subscribe((e) => {

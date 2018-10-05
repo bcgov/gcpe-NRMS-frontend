@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navmenu',
@@ -9,7 +10,7 @@ import { AuthService } from '../_services/auth.service';
 })
 export class NavMenuComponent implements OnInit {
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -21,10 +22,7 @@ export class NavMenuComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
-  get givenName() {
-    const claims: any = this.authService.identityClaims;
-    if (!claims) { return null; }
-    return claims.preferred_username;
+  goToSearch() {
+    this.router.navigate(['/search']);
   }
-
 }
