@@ -12,6 +12,7 @@ import { NewsReleaseService } from './_services/newsrelease.service';
 import { AlertifyService } from './_services/alertify.service';
 import { TopicsListComponent } from './topics/topics-list/topics-list.component';
 import { TopicsCardComponent } from './topics/topics-card/topics-card.component';
+import { TopicsDetailComponent } from './topics/topics-detail/topics-detail.component';
 import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap';
@@ -28,41 +29,42 @@ import { RecentlyViewedArticlesResolver } from './_resolvers/recently-viewed-art
 import { CheckboxComponent } from './controls/checkbox/checkbox.component';
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      NavMenuComponent,
-      HomeComponent,
-      TopicsListComponent,
-      TopicsCardComponent,
-      LoginComponent,
-      SignupComponent,
-      MinistrySignupComponent,
-      FollowComponent,
-      NotificationsComponent,
-      SignupCompleteComponent,
-      SearchComponent,
-      ArticleCardComponent,
-      CheckboxComponent
-   ],
-   imports: [
-      BrowserModule,
-      AppRoutingModule,
-      HttpClientModule,
-      OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
-      PaginationModule.forRoot(),
-      FormsModule,
-      CollapseModule.forRoot(),
-      TypeaheadModule.forRoot()
-   ],
-   providers: [
+  declarations: [
+    AppComponent,
+    NavMenuComponent,
+    HomeComponent,
+    TopicsListComponent,
+    TopicsCardComponent,
+    TopicsDetailComponent,
+    LoginComponent,
+    SignupComponent,
+    MinistrySignupComponent,
+    FollowComponent,
+    NotificationsComponent,
+    SignupCompleteComponent,
+    SearchComponent,
+    ArticleCardComponent,
+    CheckboxComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
+    PaginationModule.forRoot(),
+    FormsModule,
+    CollapseModule.forRoot(),
+    TypeaheadModule.forRoot()
+  ],
+  providers: [
     NewsReleaseService,
     AlertifyService,
     NewsReleaseListResolver,
     SearchSuggestionsResolver,
     RecentlyViewedArticlesResolver
-    ],
-   bootstrap: [
-      AppComponent
-   ]
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
