@@ -1,0 +1,15 @@
+#=========================================================
+# OpenShift template parameters for:
+# Component: .
+# Template File: templates/frontend/nrms-frontend-build.yaml
+#=========================================================
+NAME=nrms-frontend
+BUILDER_IMAGE=frontend-yarn-builder
+RUNTIME_IMAGE=frontend-nginx-runtime
+GIT_REPO_URL=https://github.com/bcgov/gcpe-NRMS-frontend.git
+GIT_REF=develop
+SOURCE_CONTEXT_DIR=
+CPU_LIMIT=1
+MEMORY_LIMIT=4Gi
+CPU_REQUEST=1
+MEMORY_REQUEST=2Gi
