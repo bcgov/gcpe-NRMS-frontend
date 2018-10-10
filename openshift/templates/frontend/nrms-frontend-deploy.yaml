@@ -3,10 +3,12 @@ kind: Template
 labels:
   app: "${NAME}-static"
   template: "${NAME}-deployment"
+  tier: frontend
 metadata:
   name: "${NAME}-deployment-template"
   annotations:
-    description: Deployment template for serving an Angular frontend application via Nginx
+    description:
+      Deployment template for serving an Angular frontend application via Nginx
     tags: "angular,nginx"
     iconClass: icon-angularjs
 objects:
@@ -65,11 +67,11 @@ objects:
                   value: "${HTTP_BASIC_PASSWORD}"
               resources:
                 requests:
-                  cpu: 100m
-                  memory: 100Mi
+                  cpu: "${CPU_REQUEST}"
+                  memory: "${MEMORY_REQUEST}"
                 limits:
-                  cpu: 500m
-                  memory: 1Gi
+                  cpu: "${CPU_LIMIT}"
+                  memory: "${MEMORY_LIMIT}"
               livenessProbe:
                 httpGet:
                   path: /nginx_status
@@ -173,7 +175,8 @@ parameters:
     value: nrms-api
   - name: API_PATH
     displayName: API Path
-    description: The root path for the API.  Used in conjunction with API_SERVICE_NAME.
+    description:
+      The root path for the API.  Used in conjunction with API_SERVICE_NAME.
     required: true
     value: /api/
   - name: AdditionalRealIpFromRules
@@ -205,9 +208,27 @@ parameters:
     value: ""
   - name: HTTP_BASIC_USERNAME
     displayName: HTTP Basic Username
-    description: "For very simple HTTP Basic authentication, the username of the ONE user"
+    description:
+      For very simple HTTP Basic authentication, the username of the ONE user
     value: ""
   - name: HTTP_BASIC_PASSWORD
     displayName: HTTP Basic Password
-    description: "For very simple HTTP Basic authentication, the password of the ONE user"
+    description:
+      For very simple HTTP Basic authentication, the password of the ONE user
     value: ""
+  - name: CPU_LIMIT
+    displayName: CPU Limit
+    description: Maximum amount of CPU the container can use.
+    value: 500m
+  - name: MEMORY_LIMIT
+    displayName: Memory Limit
+    description: Maximum amount of memory the container can use.
+    value: 1Gi
+  - name: CPU_REQUEST
+    displayName: CPU Request
+    description: Starting amount of CPU the container can use.
+    value: 100m
+  - name: MEMORY_REQUEST
+    displayName: Memory Request
+    description: Starting amount of memory the container can use.
+    value: 100Mi

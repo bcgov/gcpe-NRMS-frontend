@@ -8,9 +8,6 @@
 *.local.*
 *.overrides.param
 
-# OpenShift Source-to-Image (s2i) build scripts
-!.s2i/bin/assemble
-
 # Functional tests (BDD-style)
 functional-tests/.gradle/
 functional-tests/gebReports/

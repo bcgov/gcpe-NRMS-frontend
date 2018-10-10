@@ -197,6 +197,17 @@ Differences can include:
 
 This section is intended for application developers, and provides instructions for setting up and configuring a workstation to develop and deploy applications in a Local OpenShift Cluster environment. The following procedure uses the **`oc cluster up`** approach to provision an OpenShift Cluster directly in [Docker](https://www.docker.com/get-started).
 
+### Before you begin...
+
+If you plan on running OpenShift locally via Docker, you need to increase the resources available to Docker (i.e. memory, disk space). Docker uses only **2 GB** of memory by default, which is not enough to run OpenShift. If you experience hangs when trying to run builds and deployments in OpenShift, you should do the following:
+
+On Windows;
+
+1. Open Docker > **Settings** > **Advanced**.
+2. Increase the amount of memory available to Docker to **6 GB** (or more).
+3. You should also increase the Swap space to **2 GB** (or more).
+4. Click **Apply**.
+
 ### Getting Started Locally
 
 1. Install OpenShift [command line tools](https://github.com/openshift/origin/releases/) (CLI)
