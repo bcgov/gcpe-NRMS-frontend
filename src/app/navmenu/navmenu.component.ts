@@ -3,7 +3,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../_services/auth.service';
 import { MockTrendings } from '../_mockups/mock-trendings';
 import { MockMinistries } from '../_mockups/mock-ministries';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navmenu',
@@ -11,11 +11,11 @@ import { MockMinistries } from '../_mockups/mock-ministries';
   styleUrls: ['./navmenu.component.scss']
 })
 export class NavMenuComponent implements OnInit {
+  isCollapsed = true;
 
   trendings = MockTrendings;
   minitries = MockMinistries;
-
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -27,10 +27,7 @@ export class NavMenuComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
-  get givenName() {
-    const claims: any = this.authService.identityClaims;
-    if (!claims) { return null; }
-    return claims.preferred_username;
+  goToSearch() {
+    this.router.navigate(['/search']);
   }
-
 }

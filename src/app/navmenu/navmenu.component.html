@@ -52,7 +52,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent" [collapse]="isCollapsed">
           <ul class="navbar-nav">
             <li class="nav-item">
-                <button class="btn btn-link"><i class="fa fa-search"></i></button>
+                <button class="btn btn-link" (click)="goToSearch()"><i class="fa fa-search"></i></button>
             </li>
             <li class="nav-item active" style="position: initial;">
               <div dropdown>
@@ -76,13 +76,14 @@
                         <div class="card-body">
                           <h5 class="card-title">MINISTRIES</h5>
                           <ul class="list-group list-group-flush" id="minitry-ul" style="display: inline-block;">
-                            <li *ngFor="let ministry of minitries" class="list-group-item">{{ministry.name}}</li>
+                            <li *ngFor="let ministry of minitries" class="list-group-item">
+                              <a> {{ministry.name}}</a>
+                            </li>
                           </ul>
                         </div>
                       </div>
                     </div>
                   </div>
-                 
                 </div>
               </div>
             </li>
@@ -96,25 +97,14 @@
               <a class="nav-link" (click)="logout()">Logout <span class="sr-only"></span></a>
             </li>
             <li class="d-none d-lg-block">
-                <button class="btn btn-link"><span class="navbar-toggler-icon"></span></button>
+                <a class="btn btn-link"><span class="navbar-toggler-icon"></span></a>
             </li>
-
             <li class="nav-item active">
-                
             </li>
 
           </ul>
         </div>
-
-        <div *ngIf="loggedIn()">
-          <span>
-            Welcome {{givenName | titlecase}}
-          </span>
-        </div>
-
       </div>
     </div>
   </nav>
-
-  
 </header>

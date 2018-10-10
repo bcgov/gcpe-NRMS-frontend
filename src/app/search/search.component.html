@@ -1,0 +1,141 @@
+<div class="container">
+    <form>
+        <div class="form-row">
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option>All Topics</option>
+                </select>
+            </div>
+
+            <div class="col-md-9">
+                <div class="input-group">
+                    <!-- disable spellcheck to avoid red squiggles in search box -->
+                    <input type="text" class="form-control" spellcheck="false" [typeahead]="searchSuggestions"
+                        [(ngModel)]="searchTerm" name="searchBar" placeholder="Keyword, Article ID, etc">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" (click)="doSearch($event)">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="text-center mt-3">
+        <button type="button" class="btn btn-link" style="text-decoration: none;" (click)="showAdvancedSearch()">
+            Advanced Search <i class="fa fa-chevron-up text-primary" *ngIf="!isAdvancedSearch"></i> <i class="fa fa-chevron-down text-primary"
+                *ngIf="isAdvancedSearch"></i>
+        </button>
+        <div class="mt-5">
+            <i *ngIf="showIndeterminateProgressBar" class="fa fa-circle-o-notch fa-spin fa-3x text-primary"></i>
+        </div>
+    </div>
+
+    <div class="advanced-search" *ngIf="isAdvancedSearch">
+        <h3 class="float-left" style="width: 95%;">MINISTRIES</h3>
+        <div class="float-left">
+            <app-checkbox label="All"></app-checkbox>
+        </div>
+        <hr class="clear-both">
+        <div class="row mt-3 mb-5">
+            <div class="col md-6">
+                <app-checkbox label="Premier's Office"></app-checkbox>
+                <app-checkbox label="Intergovernmental Relations Secretariat"></app-checkbox>
+                <app-checkbox label="Advanced Education, Skills and Training"></app-checkbox>
+                <app-checkbox label="Agriculture"></app-checkbox>
+                <app-checkbox label="Attorney General"></app-checkbox>
+                <app-checkbox label="Children and Family Development"></app-checkbox>
+                <app-checkbox label="Citizen's Services"></app-checkbox>
+                <app-checkbox label="Education"></app-checkbox>
+                <app-checkbox label="Energy, Mines and Petroleum Resources"></app-checkbox>
+                <app-checkbox label="Environment and Climate Change Strategy"></app-checkbox>
+                <app-checkbox label="Finance"></app-checkbox>
+            </div>
+            <div class="col-md-6">
+                <app-checkbox label="Forests, Lands, Natrual Resource Operations and Rural Development"></app-checkbox>
+                <app-checkbox label="Health"></app-checkbox>
+                <app-checkbox label="Indigenous Relations and Reconciliation"></app-checkbox>
+                <app-checkbox label="Jobs, Trade, Technology"></app-checkbox>
+                <app-checkbox label="Labour"></app-checkbox>
+                <app-checkbox label="Mental Health Addictions"></app-checkbox>
+                <app-checkbox label="Municipal Affairs and Housing"></app-checkbox>
+                <app-checkbox label="Public Safety and Solicitor General"></app-checkbox>
+                <app-checkbox label="Social Development and Poverty Reduction"></app-checkbox>
+                <app-checkbox label="Tourism, Arts and Culture"></app-checkbox>
+                <app-checkbox label="Transportation and Infrastructure"></app-checkbox>
+            </div>
+        </div>
+
+
+        <h3 class="float-left" style="width: 95%;">REGIONS</h3>
+        <div class="float-left">
+            <app-checkbox label="All"></app-checkbox>
+        </div>
+        <hr class="clear-both">
+        <div class="row mt-3 mb-5">
+            <div class="col md-6">
+                <app-checkbox label="Vancouver Coast & Mountains"></app-checkbox>
+                <app-checkbox label="Vancouver Island / Coast"></app-checkbox>
+                <app-checkbox label="Thompson / Okanagan"></app-checkbox>
+            </div>
+            <div class="col-md-6">
+                <app-checkbox label="Kootenay Rockies"></app-checkbox>
+                <app-checkbox label="Cariboo Chilcotin Coast"></app-checkbox>
+                <app-checkbox label="Northern B.C."></app-checkbox>
+            </div>
+        </div>
+
+
+        <h3 style="width: 40em;" class="pb-2 mt-5 mb-3">
+            DATE
+            <hr>
+        </h3>
+        <div class="row mb-2">
+            <form class="form-inline ml-2">
+                <div class="form-group">
+                    <label for="fromDate">From</label>
+                    <input type="text" id="fromDate" class="form-control mx-sm-3" placeholder="dd-mm-yyyy">
+                </div>
+                <div class="form-group">
+                    <label for="toDate">To</label>
+                    <input type="text" id="toDate" class="form-control mx-sm-3" placeholder="dd-mm-yyyy">
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-outline-secondary pl-5 pr-5 pt-1 pb-1 mt-5 mb-3 mr-3" (click)="cancelAdvancedSearch()">Cancel</button>
+            <button class="btn btn-primary pl-5 pr-5 pt-1 pb-1 mt-5 mb-3">Search</button>
+        </div>
+    </div>
+
+
+    <div class="results" *ngIf="searchResults.length > 0 && searchTerm">
+        <h3 style="width: 40em;" class="pb-2 mt-5 mb-3">
+            MINISTRIES
+            <hr>
+        </h3>
+        <div class="ministry-buttons">
+            <button *ngFor="let ministryName of ministryList" type="button" [ngClass]="{'active': currentFilter === ministryName}"
+                class="btn btn-outline-primary mr-2" (click)="filterSearchResultsByMinistry($event)">
+                <small>{{ ministryName }}</small>
+            </button>
+        </div>
+
+        <h3 style="width: 40em;" class="pb-2 mt-5 mb-3">
+            ARTICLES
+            <hr>
+        </h3>
+
+        <div class="card-columns">
+            <app-article-card *ngFor="let article of filteredArticles" [article]="article"></app-article-card>
+        </div>
+    </div>
+
+    <h3 *ngIf="!searchTerm" style="width: 40em;" class="pb-2 mt-5 mb-3">
+        RECENTLY VIEWED
+        <hr>
+    </h3>
+    <div *ngIf="!searchTerm" class="card-columns">
+        <app-article-card *ngFor="let article of recentlyViewedArticles" [article]="article"></app-article-card>
+    </div>
+</div>
