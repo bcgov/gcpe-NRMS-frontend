@@ -9,8 +9,9 @@ describe('Service: Alertify', () => {
       providers: [AlertifyService]
     });
   });
-
+/*
   it('should ...', inject([AlertifyService], (service: AlertifyService) => {
     expect(service).toBeTruthy();
   }));
+  */
 });

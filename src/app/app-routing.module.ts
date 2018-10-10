@@ -7,7 +7,8 @@ import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard], resolve: { newsReleases: NewsReleaseListResolver  } }
+ /* { path: 'topics', component: TopicsListComponent, canActivate: [AuthGuard], resolve: { newsReleases: NewsReleaseListResolver  } }*/
+ { path: 'topics', component: TopicsListComponent, resolve: { newsReleases: NewsReleaseListResolver  } }
 ];
 
 @NgModule({

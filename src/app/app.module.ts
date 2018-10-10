@@ -15,6 +15,8 @@ import { TopicsCardComponent } from './topics/topics-card/topics-card.component'
 import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap';
+import { NrmsapiService } from './_services/nrmsapi.service';
 
 @NgModule({
    declarations: [
@@ -31,12 +33,14 @@ import { CollapseModule } from 'ngx-bootstrap';
       OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
       PaginationModule.forRoot(),
       FormsModule,
-      CollapseModule.forRoot()
+      CollapseModule.forRoot(),
+      BsDropdownModule.forRoot()
    ],
    providers: [
     NewsReleaseService,
     AlertifyService,
-    NewsReleaseListResolver
+    NewsReleaseListResolver,
+    NrmsapiService,
     ],
    bootstrap: [
       AppComponent
