@@ -4,11 +4,18 @@ This project uses the scripts found in [openshift-project-tools](https://github.
 
 **IMPORTANT:  These scripts are designed to be run on the command line (using Git Bash for example) in the root `./openshift` directory of your project.**
 
+## Table of Contents
+
+- [Before you begin](#before-you-begin)
+- [Scenario #1 - Running on a Local OpenShift Cluster](#scenario-1---running-on-a-local-openshift-cluster)
+- [Scenario #2 - Running on the BC Government Pathfinder OpenShift instance](#scenario-2---running-on-the-bc-government-pathfinder-openshift-instance)
+- [Advanced Stuff](#advanced-stuff)
+
 ## Before you begin...
 
 ### Working with OpenShift
 
-When working with OpenShift, commands are typically issued against the **server-project** pair to which you are currently connected. Therefore, when you are working with multiple servers (local, and remote for instance) you should always be aware of your current context so you don't inadvertently issue a command against the wrong server and project. 
+When working with OpenShift, commands are typically issued against the **server-project** pair to which you are currently connected. Therefore, when you are working with multiple servers (local, and remote for instance) you should always be aware of your current context so you don't inadvertently issue a command against the wrong server and project.
 
 **NOTE:**  Although you can login to more than one server at a time it's always a good idea to completely logout of one server before working on another.
 
@@ -45,147 +52,7 @@ The commands and instructions in the next sections assume a moderate to advanced
   * [What Is a Deployment?](https://docs.openshift.com/container-platform/3.9/dev_guide/deployments/how_deployments_work.html#what-is-a-deployment)
   * [What Is an Image Stream?](https://docs.openshift.com/container-platform/3.9/architecture/core_concepts/builds_and_image_streams.html#image-streams)
 
-## Scenario 1 - Running on the BC Government Pathfinder OpenShift instance
-
-This section includes information on how to get your application up and running in the BC Government Pathfinder OpenShift instance:
-
-### Getting Started
-
-1. Install OpenShift [command line tools](https://github.com/openshift/origin/releases/) (CLI)
-2. Change into the top level **`openshift`** folder
-3. Create **`settings.sh`** file
-4. Login to Pathfinder cluster with the command-line **`oc`** tools
-5. Run `initOSProjects.sh` to initialize your projects (e.g. dev, test, prod and tools)
-6. Run `genParams.sh` to generate settings files
-7. Review generated settings files, make edits as needed
-8. Run `genBuilds.sh` to generate the *build configurations*, or **`BuildConfig`** for your app
-9. Run `genDepls.sh -e dev` to generate the *deployment configurations*, or **`DeploymentConfig`** for your DEV environment
-   * Run `genDepls.sh -e test` for your TEST environment
-   * Run `genDepls.sh -e prod` for your PROD environment
-
-**NOTE:**  If you are looking for information on how to run your application in a local OpenShift Cluster, go to the next section (Scenario 2). It contains additional steps required for local OpenShift installations.
-
-### 1. Install OpenShift command line tools (CLI)
-
-1. Download OpenShift [command line tools](https://github.com/openshift/origin/releases/).
-2. Unzip the downloaded file.
-3. Add `oc` to your PATH. 
-
-The CLI is now available using the `oc` command:
-
-```bash
-oc <command>
-```
-
-**WINDOWS USERS:**  Ensure that you do not have a linux "oc" binary on your path if using Git Bash on a Windows PC to run the scripts.  A windows "oc.exe" binary will work fine.
-
-### 2. Change into the top level OpenShift folder
-
-```bash
-cd /[Path-To-Working-Copy]/openshift
-```
-
-### 3. Settings.sh
-
-You will need to include a `settings.sh` file in your top level **`./openshift`** directory. This file will contain your project-specific settings.
-
-At a minimum this file should contain definitions for your `PROJECT_NAMESPACE`, `GIT_URI`, and `GIT_REF` all of which should be setup to be overridable.
-
-**For Example:**
-
-```bash
-export PROJECT_NAMESPACE=${PROJECT_NAMESPACE:-nrms}
-export GIT_URI=${GIT_URI:-"https://github.com/bcgov/gcpe-NRMS-frontend.git"}
-export GIT_REF=${GIT_REF:-"develop"}
-```
-
-### 4. Login to Pathfinder
-
-**REMEMBER:**  All of the commands listed in the following sections must be run from the root **`openshift`** directory of your project's source code.
-
-*You must have the OpenShift CLI installed on your system for the scripts to work*
-
-**With the command-line (`oc`) tools:**
-
-1. Copy the command line login string from <https://console.pathfinder.gov.bc.ca:8443/console/command-line> 
-
-   It will should be like:
-
-   ```bash
-   oc login https://console.pathfinder.gov.bc.ca:8443 --token=<hidden>
-   ```
-
-2. Paste the login string into a terminal session. 
-
-3. You are now authenticated against OpenShift and will be able to execute `oc <command>`. 
-
-**NOTE:**  `oc -h` provides a summary of available commands.
-
-### 5. Initialize your projects
-
-Run;
-
-```bash
-initOSProjects.sh
-```
-
-This will initialize the projects with permissions that allow images from one project (tools) to be deployed into another project (dev, test, prod). For production environments will also ensure that persistent storage services exist.
-
-### 6. Generate settings files
-
-Run;
-
-```bash
-genParams.sh
-```
-
-**NOTE:**  Generated settings files (**`*.param`**) for the production instance of OpenShift should be committed to Git
-
-### 7. Review generated param files
-
-Before progressing through this guide it is a good idea that you review the generated **`*.param`** files and make any edits as needed.
-
-**IMPORTANT:**  Before you continue, you MUST provide a value for NAME in the "*.pipeline.param" files.
-
-- Set NAME=nrms-frontend in *[Working-Copy]/Jenkinsfile.pipeline.param*
-- Set NAME=nrms-frontend in *[Working-Copy]/openshift/Jenkinsfile.pipeline.local.param*
-
-### 8. Generate the Build Configurations for your app
-
-Run;
-
-```bash
-# genBuilds.sh -h to get advanced usage information.
-genBuilds.sh
-```
-
-, and follow the instructions. 
-
-This script will generate the build configurations into the `tools` project. Additionally, if your project contains any Jenkins pipelines (i.e. a Jenkinsfile), then a new Jenkins instance will be created in the `tools` project automatically. OpenShift will automatically wire the Jenkins pipelines to Jenkins projects within Jenkins.
-
-**NOTE:**  The script will stop mid-way through. Ensure all builds are complete in the **`tools`** project before proceeding. 
-
-### 9. Generate the Deployment Configurations for your app
-
-Run;
-
-```bash
-# genDepls.sh -e <EnvironmentName, one of [dev|test|prod]>
-# genDepls.sh -h to get advanced usage information.
-genDepls.sh -e dev
-genDepls.sh -e test
-genDepls.sh -e prod
-```
-
-, and follow the instructions.
-
-This script will generate the deployment configurations for the selected environment; `dev`, `test`, and `prod`.
-
------
-
-:tada: *Congratulations! Now you should have a fully functioning app running on OpenShift.* :tada:
-
-## Scenario 2 - Running on a Local OpenShift Cluster
+## Scenario #1 - Running on a Local OpenShift Cluster
 
 At times running in a local cluster is a little different than running in the production (Pathfinder) cluster.
 
@@ -199,7 +66,9 @@ This section is intended for application developers, and provides instructions f
 
 ### Before you begin...
 
-If you plan on running OpenShift locally via Docker, you need to increase the resources available to Docker (i.e. memory, disk space). Docker uses only **2 GB** of memory by default, which is not enough to run OpenShift. If you experience hangs when trying to run builds and deployments in OpenShift, you should do the following:
+**IMPORTANT!**  **You must increase the memory available to Docker. Not doing so will lead to failed builds and crashes in your local OpenShift cluster.**
+
+Docker uses only **2 GB** of memory by default, which is not enough to run OpenShift. If you experience hangs when trying to run builds and deployments in OpenShift, you should do the following:
 
 On Windows;
 
@@ -217,8 +86,8 @@ On Windows;
 5. Login to local cluster with the command-line **`oc`** tools
 6. Run `generateLocalProjects.sh` to generate a local set of projects (e.g. dev, test, prod and tools)
 7. Run `initOSProjects.sh` to initialize your projects
-8. Run `genParams.sh` to generate settings files
-9. Run `genParams.sh -l` to generate settings files for your local cluster
+8. Run `genParams.sh -f` to generate settings files
+9. Run `genParams.sh -f -l` to generate settings files for your local cluster
 10. Review generated settings files, make edits as needed
 11. Run `genBuilds.sh -l` to generate the *build configurations*, or **`BuildConfig`** for your app
 12. Run `genDepls.sh -l -e dev` to generate the *deployment configurations*, or **`DeploymentConfig`** for your DEV environment
@@ -232,7 +101,7 @@ On Windows;
 
 1. Download OpenShift [command line tools](https://github.com/openshift/origin/releases/).
 2. Unzip the downloaded file.
-3. Add `oc` to your PATH. 
+3. Add `oc` to your PATH.
 
 The CLI is now available using the `oc` command:
 
@@ -283,7 +152,7 @@ The server is accessible via web console at:
     https://10.0.75.2:8443
 ```
 
-This will start your local OpenShift cluster using persistence and Docker containers so your configuration is preserved across restarts. 
+This will start your local OpenShift cluster using persistence and Docker containers so your configuration is preserved across restarts.
 
 By default, the OpenShift cluster will be setup with a routing suffix that ends in **`nip.io`**. This is to allow dynamic host names to be created for routes; e.g. http://your-app-dev.10.0.75.2.nip.io/
 
@@ -301,9 +170,9 @@ By default, the OpenShift cluster will be setup with a routing suffix that ends 
    oc login https://10.0.75.2:8443 --token=<hidden>
    ```
 
-2. Paste the login string into a terminal session. 
+2. Paste the login string into a terminal session.
 
-3. You are now authenticated against OpenShift and will be able to execute `oc <command>`. 
+3. You are now authenticated against OpenShift and will be able to execute `oc <command>`.
 
 **NOTE:**  If you are asked for credentials use `developer` as both the username and password.
 
@@ -311,7 +180,7 @@ By default, the OpenShift cluster will be setup with a routing suffix that ends 
 
 ### 6. Generate local set of projects (dev, test, prod and tools)
 
-*This command will only work on a LOCAL server context. It will fail if you are logged into a remote server.* 
+*This command will only work on a LOCAL server context. It will fail if you are logged into a remote server.*
 
 ```bash
 generateLocalProjects.sh
@@ -321,7 +190,7 @@ This will generate four OpenShift projects; **tools**, **dev**, **test** and **p
 
 ##### 6.1 Resetting your local OpenShift cluster
 
-To reset your local environments (i.e. start over) run; 
+To reset your local environments (i.e. start over) run;
 
 ```bash
 # Caution - your OpenShift projects will be deleted!
@@ -347,20 +216,22 @@ This will initialize the projects with permissions that allow images from one pr
 Run;
 
 ```bash
-genParams.sh
+# -f switch means "force" (i.e. overwrite any existing config files)
+genParams.sh -f
 ```
 
 **NOTE:**  Generated settings files (**`*.param`**) for the production instance of OpenShift should be committed to Git
 
 ### 9. Generate extra settings files - for your local cluster
 
-When you are working with a local cluster you must generate a set of local "param" files. 
+When you are working with a local cluster you must generate a set of local "param" files.
 
 Run;
 
 ```bash
-# -l switch means "local"
-genParams.sh -l
+# -f switch means "force" (i.e. overwrite any existing config files)
+# -l switch means "local" params
+genParams.sh -f -l
 ```
 
 This will generate local settings files for all your build configurations, deployment configurations, and Jenkins pipelines. The local settings will ensure that the CPU and Memory resources (limits and requests) specified in your OpenShift templates are adjusted accordingly to avoid builds and deployments from hanging due to lack of sufficient resources in your local workstation.
@@ -380,6 +251,8 @@ Before progressing through this guide it is a good idea that you review the gene
 
 ### 11. Generate the Build Configurations for your app
 
+This script will generate the build configurations into the `tools` project. Additionally, if your project contains any Jenkins pipelines (i.e. a Jenkinsfile), then a new Jenkins instance will be created in the `tools` project automatically. OpenShift will automatically wire the Jenkins pipelines to Jenkins projects within Jenkins.
+
 Run;
 
 ```bash
@@ -387,13 +260,18 @@ Run;
 genBuilds.sh -l
 ```
 
-, and follow the instructions. 
+:warning: **IMPORTANT!**  The script will stop mid-way through. 
 
-This script will generate the build configurations into the `tools` project. Additionally, if your project contains any Jenkins pipelines (i.e. a Jenkinsfile), then a new Jenkins instance will be created in the `tools` project automatically. OpenShift will automatically wire the Jenkins pipelines to Jenkins projects within Jenkins.
+Ensure all builds are complete in the **`tools`** project before proceeding:
 
-**NOTE:**  The script will stop mid-way through. Ensure all builds are complete in the **`tools`** project before proceeding. 
+1. Login to your local cluster.
+2. Go to "Tools" project > **Builds** > **Builds**.
+3. Wait for all the build to complete (i.e. status must be ":white_check_mark: Complete").
+4. Go back to the command line, press any key to proceed.
 
 ### 12. Generate the Deployment Configurations for your app
+
+This script will generate the deployment configurations for the selected environment; `dev`, `test`, and `prod`.
 
 Run;
 
@@ -406,13 +284,21 @@ genDepls.sh -l -e prod
 
 , and follow the instructions.
 
-This script will generate the deployment configurations for the selected environment; `dev`, `test`, and `prod`.
+:warning: **IMPORTANT!**  Verify that the deployments were executed successfully
+
+1. Login to your local cluster.
+2. Switch to your "DEV" project (from the projects drop-down).
+3. Click **Applications** > **Deployments**.
+4. Wait for all deployments to complete (i.e. status must be ACTIVE).
+5. Go back to the command line, press any key to proceed.
+
+![apps](./gcpe-frontend-and-server-apps.png)
 
 ### 13. Fix the routes (server URLs) - for local instances only
 
 ##### Why do I need to do this?
 
-The current version of the automated OpenShift scripts ([openshift-project-tools](https://github.com/BCDevOps/openshift-project-tools)) use a hardcoded URL when creating the routes to your application deployment environments. 
+The current version of the automated OpenShift scripts ([openshift-project-tools](https://github.com/BCDevOps/openshift-project-tools)) use a hardcoded URL when creating the routes to your application deployment environments.
 
 All routes created by these scripts are explicitly defined for the Pathfinder (BC Government) instance of OpenShift; i.e. your app URL (in dev) is defined as https://nrms-frontend-nrms-dev.pathfinder.gov.bc.ca/ instead of pointing to your local instance.
 
@@ -437,7 +323,150 @@ https://nrms-frontend-nrms-dev.10.0.75.2.nip.io/
 
 ------
 
-🎉 *Congratulations! Now you should have a fully functioning app running on your local OpenShift instance.* 🎉
+:tada: *Congratulations! Now you should have a fully functioning app running on your local OpenShift instance.* :tada:
+
+## Scenario #2 - Running on the BC Government Pathfinder OpenShift instance
+
+This section includes information on how to get your application up and running in the BC Government Pathfinder OpenShift instance:
+
+### Getting Started
+
+1. Install OpenShift [command line tools](https://github.com/openshift/origin/releases/) (CLI)
+2. Change into the top level **`openshift`** folder
+3. Create **`settings.sh`** file
+4. Login to Pathfinder cluster with the command-line **`oc`** tools
+5. Run `initOSProjects.sh` to initialize your projects (e.g. dev, test, prod and tools)
+6. Run `genParams.sh` to generate settings files
+7. Review generated settings files, make edits as needed
+8. Run `genBuilds.sh` to generate the *build configurations*, or **`BuildConfig`** for your app
+9. Run `genDepls.sh -e dev` to generate the *deployment configurations*, or **`DeploymentConfig`** for your DEV environment
+   * Run `genDepls.sh -e test` for your TEST environment
+   * Run `genDepls.sh -e prod` for your PROD environment
+
+**NOTE:**  If you are looking for information on how to run your application in a local OpenShift Cluster, go to the next section (Scenario 2). It contains additional steps required for local OpenShift installations.
+
+### 1. Install OpenShift command line tools (CLI)
+
+1. Download OpenShift [command line tools](https://github.com/openshift/origin/releases/).
+2. Unzip the downloaded file.
+3. Add `oc` to your PATH.
+
+The CLI is now available using the `oc` command:
+
+```bash
+oc <command>
+```
+
+**WINDOWS USERS:**  Ensure that you do not have a linux "oc" binary on your path if using Git Bash on a Windows PC to run the scripts.  A windows "oc.exe" binary will work fine.
+
+### 2. Change into the top level OpenShift folder
+
+```bash
+cd /[Path-To-Working-Copy]/openshift
+```
+
+### 3. Settings.sh
+
+You will need to include a `settings.sh` file in your top level **`./openshift`** directory. This file will contain your project-specific settings.
+
+At a minimum this file should contain definitions for your `PROJECT_NAMESPACE`, `GIT_URI`, and `GIT_REF` all of which should be setup to be overridable.
+
+**For Example:**
+
+```bash
+export PROJECT_NAMESPACE=${PROJECT_NAMESPACE:-nrms}
+export GIT_URI=${GIT_URI:-"https://github.com/bcgov/gcpe-NRMS-frontend.git"}
+export GIT_REF=${GIT_REF:-"develop"}
+```
+
+### 4. Login to Pathfinder
+
+**REMEMBER:**  All of the commands listed in the following sections must be run from the root **`openshift`** directory of your project's source code.
+
+*You must have the OpenShift CLI installed on your system for the scripts to work*
+
+**With the command-line (`oc`) tools:**
+
+1. Copy the command line login string from <https://console.pathfinder.gov.bc.ca:8443/console/command-line>
+
+   It will should be like:
+
+   ```bash
+   oc login https://console.pathfinder.gov.bc.ca:8443 --token=<hidden>
+   ```
+
+2. Paste the login string into a terminal session.
+
+3. You are now authenticated against OpenShift and will be able to execute `oc <command>`.
+
+**NOTE:**  `oc -h` provides a summary of available commands.
+
+### 5. Initialize your projects
+
+Run;
+
+```bash
+initOSProjects.sh
+```
+
+This will initialize the projects with permissions that allow images from one project (tools) to be deployed into another project (dev, test, prod). For production environments will also ensure that persistent storage services exist.
+
+**REMEMBER!**  These instructions are for the production cluster (Pathfinder). To run OpenShift locally refer to [Scenario #1](#scenario-#1---running-on-a-local-openshift-cluster).
+
+### 6. Generate settings files
+
+Run;
+
+```bash
+# -f switch means "force" (i.e. overwrite any existing config files)
+genParams.sh -f
+```
+
+**NOTE:**  Generated settings files (**`*.param`**) for the production instance of OpenShift should be committed to Git
+
+### 7. Review generated param files
+
+Before progressing through this guide it is a good idea that you review the generated **`*.param`** files and make any edits as needed.
+
+**IMPORTANT:**  Before you continue, you MUST provide a value for NAME in the "*.pipeline.param" files.
+
+- Set NAME=nrms-frontend in *[Working-Copy]/Jenkinsfile.pipeline.param*
+- Set NAME=nrms-frontend in *[Working-Copy]/openshift/Jenkinsfile.pipeline.local.param*
+
+### 8. Generate the Build Configurations for your app
+
+Run;
+
+```bash
+# genBuilds.sh -h to get advanced usage information...
+genBuilds.sh
+```
+
+**IMPORTANT!**  The script will stop mid-way through. Ensure all builds are complete in the **`tools`** project before proceeding.
+
+**REMEMBER!**  These instructions are for the production cluster (Pathfinder). To run OpenShift locally refer to [Scenario #1](#scenario-#1---running-on-a-local-openshift-cluster).
+
+This script will generate the build configurations into the `tools` project. Additionally, if your project contains any Jenkins pipelines (i.e. a Jenkinsfile), then a new Jenkins instance will be created in the `tools` project automatically. OpenShift will automatically wire the Jenkins pipelines to Jenkins projects within Jenkins.
+
+### 9. Generate the Deployment Configurations for your app
+
+Run;
+
+```bash
+# genDepls.sh -e <EnvironmentName, one of [dev|test|prod]>
+# genDepls.sh -h to get advanced usage information.
+genDepls.sh -e dev
+genDepls.sh -e test
+genDepls.sh -e prod
+```
+
+**REMEMBER!**  These instructions are for the production cluster (Pathfinder). To run OpenShift locally refer to [Scenario #1](#scenario-#1---running-on-a-local-openshift-cluster).
+
+This script will generate the deployment configurations for the selected environment; `dev`, `test`, and `prod`.
+
+-----
+
+:tada: *Congratulations! Now you should have a fully functioning app running on OpenShift.* :tada:
 
 ## Advanced Stuff
 
