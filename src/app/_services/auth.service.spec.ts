@@ -8,9 +8,7 @@ describe('Service: Auth', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        authService,
-      ],
+      providers: [authService],
     });
   });
 
