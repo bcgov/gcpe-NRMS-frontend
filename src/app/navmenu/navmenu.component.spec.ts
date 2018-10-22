@@ -87,35 +87,5 @@ describe('NavmenuComponent', () => {
     expect(onClickMock).toHaveBeenCalled();
     console.log(topicCard);
     expect(topicButton.attributes['aria-expanded']).toBe('true');
-    //expect(topicCard.attributes['aria-hidden']).toBe('false');
-
-    /*
-    topicButton.nativeElement.click();
-    fixture.detectChanges();
-    expect(onClickMock).toHaveBeenCalled();
-    tick();
-    */
-
-    //expect(topicButton.attributes['aria-expanded']).toBe('false');
-    /*
-    topicButton.nativeElement.click();
-    expect(topicButton.attributes['aria-expanded']).toBe('true');
-
-    topicButton.nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    console.log( topicCard );
-    console.log( topicCard.nativeElement );
-    expect(topicButton.attributes['aria-expanded']).toBe('false');
-
-    topicButton.nativeElement.click();
-    tick();
-    fixture.detectChanges();
-    console.log( topicCard );
-    console.log( topicCard.nativeElement );
-    expect(topicButton.attributes['aria-expanded']).toBe('true');
-    */
   }));
-
-
 })
