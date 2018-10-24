@@ -34,7 +34,7 @@ describe('NavmenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NavMenuComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement.query(By.css('.gov-narbar'));
+    de = fixture.debugElement.query(By.css('.gov-navbar'));
     element  = de.nativeElement;
     fixture.detectChanges();
   });
