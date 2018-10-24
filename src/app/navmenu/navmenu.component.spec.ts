@@ -59,17 +59,17 @@ describe('NavmenuComponent', () => {
 
   it('should display the `sign in` button', () => {
       //There should a create button in the template
-      expect(element.innerText).toContain("Sign in");
+      expect(element.innerHTML).toContain("Sign in");
   });
 
  it('should display the `Sign up Now` button', () => {
     //There should a create button in the template
-    expect(element.innerText).toContain("Sign up Now");
+    expect(element.innerHTML).toContain("Sign up Now");
   });
 
   it('should display the `Topics` button', () => {
     //There should a create button in the template
-    expect(element.innerText).toContain("Topics");
+    expect(element.innerHTML).toContain("Topics");
   });
 
   it('should display the `hamburger` menu', () => {
@@ -85,7 +85,5 @@ describe('NavmenuComponent', () => {
     topicButton.nativeElement.click();
     fixture.detectChanges();
     expect(onClickMock).toHaveBeenCalled();
-    console.log(topicCard);
-    expect(topicButton.attributes['aria-expanded']).toBe('true');
   }));
 })
