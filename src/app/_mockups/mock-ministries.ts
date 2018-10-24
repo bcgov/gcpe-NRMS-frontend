@@ -1,0 +1,26 @@
+import { Ministry } from '../_models/ministry';
+
+export const MockMinistries: Ministry[] =  [
+    {id: 1, name:`Premier's office`},
+    {id: 2, name:'Intergovernmental Relations Secretariat'},
+    {id: 3, name:'Advanced Education, Skills and Training'},
+    {id: 4, name:'Agriculture'},
+    {id: 5, name:'Attorney General'},
+    {id: 6, name:'Children and Family Development'},
+    {id: 7, name:`Citizen's Service`},
+    {id: 8, name:'Education'},
+    {id: 9, name:'Energy, Mines and Petroleum Resources'},
+    {id: 10, name:'Environment and Climate Change Strategy'},
+    {id: 11, name:'Finance'},
+    {id: 12, name:'Forests, Lands, Natural Resource Operations and Rural Development'},
+    {id: 13, name:'Health'},
+    {id: 14, name:'Indigenous Relations and Reconciliation'},
+    {id: 15, name:'Jobs, Trade and Technology'},
+    {id: 16, name:'Labour'},
+    {id: 17, name:'Mental Health and Addictions'},
+    {id: 18, name:'Municipal Affairs and Housing'},
+    {id: 19, name:'Public Safety and Solicitor General'},
+    {id: 20, name:'Social Development and Poverty Reduction'},
+    {id: 21, name:'Tourism, Arts and Culture'},
+    {id: 22, name:'Transportation and Infrastructure'},
+]

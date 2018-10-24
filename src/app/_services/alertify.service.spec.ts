@@ -10,7 +10,4 @@ describe('Service: Alertify', () => {
     });
   });
 
-  it('should ...', inject([AlertifyService], (service: AlertifyService) => {
-    expect(service).toBeTruthy();
-  }));
 });

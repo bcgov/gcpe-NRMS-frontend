@@ -9,6 +9,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to nrms-frontend!');
+
+    expect(page.getParagraphText()).toEqual('News Release Management');
   });
 });

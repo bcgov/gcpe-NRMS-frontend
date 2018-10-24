@@ -16,6 +16,8 @@ import { TopicsDetailComponent } from './topics/topics-detail/topics-detail.comp
 import { NewsReleaseListResolver } from './_resolvers/news-release-list.resolver';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap';
+import { BsDropdownModule } from 'ngx-bootstrap';
+import { NrmsapiService } from './_services/nrmsapi.service';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MinistrySignupComponent } from './auth/ministry-signup/ministry-signup.component';
@@ -29,42 +31,44 @@ import { RecentlyViewedArticlesResolver } from './_resolvers/recently-viewed-art
 import { CheckboxComponent } from './controls/checkbox/checkbox.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    TopicsListComponent,
-    TopicsCardComponent,
-    TopicsDetailComponent,
-    LoginComponent,
-    SignupComponent,
-    MinistrySignupComponent,
-    FollowComponent,
-    NotificationsComponent,
-    SignupCompleteComponent,
-    SearchComponent,
-    ArticleCardComponent,
-    CheckboxComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
-    PaginationModule.forRoot(),
-    FormsModule,
-    CollapseModule.forRoot(),
-    TypeaheadModule.forRoot()
-  ],
-  providers: [
+   declarations: [
+      AppComponent,
+      NavMenuComponent,
+      HomeComponent,
+      TopicsListComponent,
+      TopicsCardComponent,
+      TopicsDetailComponent,
+      LoginComponent,
+      SignupComponent,
+      MinistrySignupComponent,
+      FollowComponent,
+      NotificationsComponent,
+      SignupCompleteComponent,
+      SearchComponent,
+      ArticleCardComponent,
+      CheckboxComponent
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      HttpClientModule,
+      OAuthModule.forRoot({ resourceServer: { sendAccessToken: true } }), // send the auth token with each request
+      PaginationModule.forRoot(),
+      FormsModule,
+      CollapseModule.forRoot(),
+      TypeaheadModule.forRoot(),
+      BsDropdownModule.forRoot()
+   ],
+   providers: [
     NewsReleaseService,
     AlertifyService,
     NewsReleaseListResolver,
+    NrmsapiService,
     SearchSuggestionsResolver,
     RecentlyViewedArticlesResolver
-  ],
-  bootstrap: [
-    AppComponent
-  ]
+    ],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }

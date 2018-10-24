@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../_services/auth.service';
+import { MockTrendings } from '../_mockups/mock-trendings';
+import { MockMinistries } from '../_mockups/mock-ministries';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,6 +13,8 @@ import { Router } from '@angular/router';
 export class NavMenuComponent implements OnInit {
   isCollapsed = true;
 
+  trendings = MockTrendings;
+  minitries = MockMinistries;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {

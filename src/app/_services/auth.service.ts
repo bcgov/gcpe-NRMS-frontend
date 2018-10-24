@@ -6,23 +6,23 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class AuthService {
 
-constructor(private oauthService: OAuthService) { }
+  constructor(private oauthService: OAuthService) { }
 
-login() {
-  this.oauthService.initImplicitFlow(); // redirection is configured in the app component
-}
+  login() {
+    this.oauthService.initImplicitFlow(); // redirection is configured in the app component
+  }
 
-logOut() {
-  this.oauthService.logOut();
-}
+  logOut() {
+    this.oauthService.logOut();
+  }
 
-loggedIn() {
-  const token = this.oauthService.getAccessToken();
-  return !!token;
-}
+  loggedIn() {
+    const token = this.oauthService.getAccessToken();
+    return !!token;
+  }
 
-get identityClaims() {
-  return this.oauthService.getIdentityClaims();
-}
+  get identityClaims() {
+    return this.oauthService.getIdentityClaims();
+  }
 
 }
